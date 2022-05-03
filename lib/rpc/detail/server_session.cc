@@ -2,6 +2,7 @@
 
 #include "rpc/config.h"
 #include "rpc/server.h"
+#include "rpc/this_client.h"
 #include "rpc/this_handler.h"
 #include "rpc/this_server.h"
 #include "rpc/this_session.h"
@@ -64,8 +65,14 @@ void server_session::do_read() {
                     io_->post([this, self, msg, z]() {
                         this_handler().clear();
                         this_session().clear();
+                        this_client().clear();
+
                         this_session().set_id(reinterpret_cast<session_id_t>(this));
                         this_server().cancel_stop();
+
+                        auto ep = socket().remote_endpoint();
+                        this_client().set_address(ep.address().to_string());
+                        this_client().set_port(ep.port());
 
                         auto resp = disp_->dispatch(msg, suppress_exceptions_);
 
