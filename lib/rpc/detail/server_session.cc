@@ -72,6 +72,8 @@ void server_session::do_read() {
 
                         auto ep = socket().remote_endpoint();
                         this_client().set_address(ep.address().to_string());
+                        this_client().set_is_v4(ep.address().is_v4());
+                        this_client().set_is_v6(ep.address().is_v6());
                         this_client().set_port(ep.port());
 
                         auto resp = disp_->dispatch(msg, suppress_exceptions_);

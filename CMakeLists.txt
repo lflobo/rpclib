@@ -97,6 +97,7 @@ add_library(${PROJECT_NAME}
   lib/rpc/this_handler.cc
   lib/rpc/this_session.cc
   lib/rpc/this_server.cc
+  lib/rpc/this_client.cc
   lib/rpc/rpc_error.cc
   lib/rpc/detail/server_session.cc
   lib/rpc/detail/response.cc
